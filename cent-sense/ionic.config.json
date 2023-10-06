@@ -1,0 +1,7 @@
+{
+  "name": "cent-sense",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
