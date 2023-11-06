@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header mode="ios">
   <ion-toolbar>
     <ion-title>Login</ion-title>
   </ion-toolbar>
@@ -11,6 +11,11 @@
     <ion-item>
       <ion-input type="password" formControlName="password" label="password"></ion-input>
     </ion-item>
-    <ion-button  block [disabled]="!loginForm.valid" (click)="login()">Login</ion-button>
-  </form>
+    </form>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button mode="ios"  expand="block" [disabled]="!loginForm.valid" (click)="login()">Login</ion-button>
+  </ion-toolbar>
+</ion-footer>
+<ion-toast [isOpen]="show_toast" message="This toast will disappear after 5 seconds" [duration]="5000"></ion-toast>

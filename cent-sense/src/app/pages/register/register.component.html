@@ -1,0 +1,27 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="registerForm">
+    <ion-item>
+      <ion-input mode="ios" type="text" formControlName="name" label="Name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input mode="ios" type="email" formControlName="email" label="Email" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input mode="ios" type="password" formControlName="password" label="Password"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" mode="ios" (click)="register()" >Register</ion-button>
+  </ion-toolbar>
+</ion-footer>

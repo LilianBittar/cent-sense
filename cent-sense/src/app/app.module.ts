@@ -9,11 +9,30 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
+import { RegisterComponent } from './pages/register/register.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { authReducer } from './store/auth/auth.reducer';
+import {
+  StoreModule,
+} from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/auth/auth.effects';
+
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule],
-  providers: [AuthService, { 
+  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  imports: [
+    StoreModule.forRoot({
+     auth: authReducer 
+    }),
+    EffectsModule.forRoot([AuthEffects]),
+    BrowserModule, 
+    IonicModule.forRoot(),
+    AppRoutingModule, 
+    ReactiveFormsModule,
+    HttpClientModule],
+  providers: [AuthService, 
+  { 
     provide: RouteReuseStrategy, 
     useClass: IonicRouteStrategy
   }],
