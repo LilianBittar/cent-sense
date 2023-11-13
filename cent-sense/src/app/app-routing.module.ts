@@ -5,8 +5,8 @@ import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [ 
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'auth',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
   },
   {
   path: 'login',

@@ -7,3 +7,6 @@
 <ion-toast color="success" [isOpen]="show_success_toast" (click)="show_success_toast = false; success_message = ''"
   [message]="success_message" [duration]="2000"
   position="top" (didDismiss)="show_success_toast = false; success_message = ''"></ion-toast>
+
+
+  <ion-loading [isOpen]="loading" message="Loading..."></ion-loading>

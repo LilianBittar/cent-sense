@@ -1,16 +1,36 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Welcome to cent sense</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content class="ion-padding">
-  <ion-accordion-group value="first">
-    <ion-accordion value="first">
-      <ion-label slot="header">Insert your incomes</ion-label>
-      <ion-item slot="content">
-        <ion-input placeholder="Enter amount"></ion-input>
+<ion-menu contentId="main-content" #mainMenu id="mainMenu">
+  <ion-header>
+    <ion-toolbar>
+      <ion-avatar slot="start" class="d-flex align-items-center justify-content-center">
+        <ion-icon size="large" name="person-circle-outline"></ion-icon>
+      </ion-avatar>
+      <ion-title >{{user?.name}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding flex-column justify-content-between">
+    <ion-list>
+      <ion-item button routerLink="/auth/plans" (click)="this.mainMenu.close()">
+        <ion-label>Plans</ion-label>
       </ion-item>
-    </ion-accordion>
-  </ion-accordion-group>
-
-</ion-content>
+      <ion-item button routerLink="/auth/recipes" (click)="this.mainMenu.close()">
+        <ion-label>Recipes</ion-label>
+      </ion-item>
+      <ion-item button (click)="this.mainMenu.close()">
+        <ion-label>Stats</ion-label>
+      </ion-item>
+      <ion-item button routerLink="/auth/preferences" (click)="this.mainMenu.close()">
+        <ion-label>Preferences</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <ion-footer class="ion-padding ion-no-border">
+    <ion-list>
+      <ion-item button>
+        <ion-label>Logout</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-footer>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-router-outlet></ion-router-outlet>
+</div>

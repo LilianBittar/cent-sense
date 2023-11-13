@@ -9,7 +9,11 @@ import { FormGroup } from '@angular/forms';
 export class HomePage {
 
   income!: FormGroup;
+  user: any = {};
 
-  constructor() {}
+
+  constructor() {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+  }
 
 }

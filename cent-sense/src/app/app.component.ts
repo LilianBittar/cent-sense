@@ -12,6 +12,7 @@ export class AppComponent {
   success_message: string = '';
   show_error_toast: boolean = false;
   show_success_toast: boolean = false;
+  loading: boolean = false;
   
   constructor(private eventRelay: EventRelayService) {
     this.eventRelay.onEventEmit.subscribe((event: any) => {
@@ -36,6 +37,12 @@ export class AppComponent {
           this.error_message = 'Registration failed';
           this.show_error_toast = true;
         break;
+        case 'show_loading':
+          this.loading = true;
+          break;
+        case 'hide_loading':
+          this.loading = false;
+          break;
         default:
           console.log('unknown event received');
       }

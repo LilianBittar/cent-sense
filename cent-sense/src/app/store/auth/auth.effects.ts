@@ -18,11 +18,13 @@ export class AuthEffects {
                 this.authService.login(action.email, action.password).pipe(
                     map((user: any) => {
                         this.eventRelay.emit('login_success', '');
-                        this.router.navigate(['/home']);
+                        this.eventRelay.emit('hide_loading', '');
+                        this.router.navigate(['/auth']);
                         return AuthActions.loginSuccess(user);
                     }),
                     catchError((error) => {
                         this.eventRelay.emit('login_failure', '');
+                        this.eventRelay.emit('hide_loading', '');
                         return of(AuthActions.loginFailure({ error }));
                     })
                 )
