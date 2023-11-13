@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EventRelayService } from './services/event-relay.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,38 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+
+  error_message: string = '';
+  success_message: string = '';
+  show_error_toast: boolean = false;
+  show_success_toast: boolean = false;
+  
+  constructor(private eventRelay: EventRelayService) {
+    this.eventRelay.onEventEmit.subscribe((event: any) => {
+      switch (event.name) {
+        case 'login_success':
+          this.success_message = 'Login successful';
+          this.show_success_toast = true;
+          break;
+        case 'login_failure':
+          this.error_message = 'Login failed';
+          this.show_error_toast = true;
+          break;
+        case 'logout':
+          this.success_message = 'Logout successful';
+          this.show_success_toast = true;
+          break;
+        case 'registration_success':
+          this.success_message = 'Registration successful';
+          this.show_success_toast = true;
+          break;
+        case 'registration_failure':
+          this.error_message = 'Registration failed';
+          this.show_error_toast = true;
+        break;
+        default:
+          console.log('unknown event received');
+      }
+    });
+  }
 }

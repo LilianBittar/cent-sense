@@ -3,7 +3,7 @@
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="loginForm">
     <ion-item>
       <ion-input mode="ios" type="text" formControlName="email" label="email"></ion-input>
@@ -11,11 +11,27 @@
     <ion-item>
       <ion-input type="password" formControlName="password" label="password"></ion-input>
     </ion-item>
-    </form>
+  </form>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button mode="ios"  expand="block" [disabled]="!loginForm.valid" (click)="login()">Login</ion-button>
+    <ion-row>
+      <ion-col>
+        <ion-button mode="ios" size="small" class="w-100"
+          [disabled]="!loginForm.valid" (click)="login()">
+          <span>
+            Login
+          </span>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="secondary" size="small" class="w-100   " mode="ios"
+          routerLink="/register">
+          <span>
+            Register
+          </span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-footer>
-<ion-toast [isOpen]="show_toast" message="This toast will disappear after 5 seconds" [duration]="5000"></ion-toast>

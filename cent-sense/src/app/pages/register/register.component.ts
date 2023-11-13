@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { Store } from '@ngrx/store';
+import { AuthActions } from 'src/app/store/auth/auth.actions';
 
 @Component({
   selector: 'app-register',
@@ -12,8 +12,7 @@ export class RegisterComponent  implements OnInit {
   registerForm!: FormGroup;
   errorMessage: string = '';
 
-  constructor(private formBuilder: FormBuilder, private router: Router,
-    private authService: AuthService) { }
+  constructor(private formBuilder: FormBuilder, private store: Store) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -28,17 +27,7 @@ export class RegisterComponent  implements OnInit {
       const name = this.registerForm.get('name')?.value;
       const email = this.registerForm.get('email')?.value;
       const password = this.registerForm.get('password')?.value;
-      this.authService.register(name, email, password)
-      .subscribe(
-        {
-          next: () => {
-            this.router.navigate(['login']);
-          },
-          error: (err) => {
-            this.errorMessage = err;
-          }
-        }
-      );
+      this.store.dispatch(AuthActions.register({ name, email, password }));
   }
   
   }

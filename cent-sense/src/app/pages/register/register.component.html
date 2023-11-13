@@ -1,10 +1,13 @@
 <ion-header mode="ios">
   <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button defaultHref="/login" mode="ios"></ion-back-button>
+    </ion-buttons>
     <ion-title>Register</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="registerForm">
     <ion-item>
       <ion-input mode="ios" type="text" formControlName="name" label="Name"></ion-input>
@@ -22,6 +25,10 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" mode="ios" (click)="register()" >Register</ion-button>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" color="secondary" size="small" mode="ios" (click)="register()" >Register</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-footer>

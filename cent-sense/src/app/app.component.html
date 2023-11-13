@@ -1,3 +1,9 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>
+
+<ion-toast color="danger" [isOpen]="show_error_toast" [message]="error_message" (click)="show_error_toast = false; error_message = ''"
+  [duration]="2000" position="top" (didDismiss)="show_error_toast = false; error_message = ''"></ion-toast>
+<ion-toast color="success" [isOpen]="show_success_toast" (click)="show_success_toast = false; success_message = ''"
+  [message]="success_message" [duration]="2000"
+  position="top" (didDismiss)="show_success_toast = false; success_message = ''"></ion-toast>
