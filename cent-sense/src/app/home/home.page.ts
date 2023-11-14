@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ApiAdapterService } from '../services/api-adapter.service';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +13,22 @@ export class HomePage {
   user: any = {};
 
 
-  constructor() {
+  constructor(
+    private api: ApiAdapterService,
+  ) {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    if(localStorage.getItem('ingredients') == null) {
+      this.api.getIngredients().subscribe(
+        {
+          next: data => {
+            localStorage.setItem('ingredients', JSON.stringify(data));
+          },
+          error: error => {
+            console.error('There was an error!', error);
+          }
+        }
+      );
+    }
   }
 
 }

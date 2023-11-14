@@ -7,8 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PreferencesComponent  implements OnInit {
 
+  ingredients: any[] = [];
+  filtered_ingredients: any[] = [];
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ingredients = JSON.parse(localStorage.getItem('ingredients') || '{}');
+  }
+
+  search(event: any) {
+    this.filtered_ingredients = this.ingredients.filter((ingredient) => {
+      return ingredient.name.toLowerCase().includes(event.target.value.toLowerCase());
+    });
+  }
 
 }

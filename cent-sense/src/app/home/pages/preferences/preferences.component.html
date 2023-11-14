@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar mode="ios">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -8,5 +8,36 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  preferences work
+  <ion-row>
+    <ion-col>
+      <ion-segment mode="ios" size="small" value="breakfast">
+        <ion-segment-button value="breakfast">
+          <ion-label>Breakfast</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="lunch">
+          <ion-label>Lunch</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="dinner">
+          <ion-label>Dinner</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-searchbar mode="ios" class="ion-no-padding"
+        (ionInput)="search($event)"></ion-searchbar>
+    </ion-col>
+  </ion-row>
+  <div class="position-relative " *ngIf="filtered_ingredients.length > 0">
+    <ion-card class="suggestion_list w-100 ion-no-margin">
+      <ion-card-content>
+        <ion-list >
+          <ion-item *ngFor="let item of filtered_ingredients">
+            <ion-label>{{item.name}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

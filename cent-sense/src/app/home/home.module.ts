@@ -9,6 +9,7 @@ import { IntroductionComponent } from './introduction/introduction.component';
 import { PlansComponent } from './pages/plans/plans.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
 import { PreferencesComponent } from './pages/preferences/preferences.component';
+import { StatsComponent } from './pages/stats/stats.component';
 
 
 @NgModule({
@@ -18,6 +19,6 @@ import { PreferencesComponent } from './pages/preferences/preferences.component'
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, IntroductionComponent, PlansComponent, RecipesComponent, PreferencesComponent]
+  declarations: [HomePage, IntroductionComponent, PlansComponent, RecipesComponent, PreferencesComponent, StatsComponent]
 })
 export class HomePageModule {}
