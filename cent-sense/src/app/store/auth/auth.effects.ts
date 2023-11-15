@@ -19,7 +19,7 @@ export class AuthEffects {
                     map((user: any) => {
                         this.eventRelay.emit('login_success', '');
                         this.eventRelay.emit('hide_loading', '');
-                        this.router.navigate(['/auth']);
+                        this.router.navigate(['/auth/plans']);
                         return AuthActions.loginSuccess(user);
                     }),
                     catchError((error) => {

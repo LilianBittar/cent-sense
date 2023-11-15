@@ -10,34 +10,43 @@
 <ion-content class="ion-padding">
   <ion-row>
     <ion-col>
-      <ion-segment mode="ios" size="small" value="breakfast">
-        <ion-segment-button value="breakfast">
+      <ion-segment mode="ios" size="small" [value]="selected_tab">
+        <ion-segment-button value="breakfast" (click)="switchTab('breakfast')">
           <ion-label>Breakfast</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="lunch">
+        <ion-segment-button value="lunch" (click)="switchTab('lunch')">
           <ion-label>Lunch</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="dinner">
+        <ion-segment-button value="dinner" (click)="switchTab('dinner')">
           <ion-label>Dinner</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="exclude" (click)="switchTab('exclude')">
+          <ion-label>Exclude</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-searchbar mode="ios" class="ion-no-padding"
+      <ion-searchbar mode="ios" class="ion-no-padding" [(ngModel)]="search_text"
         (ionInput)="search($event)"></ion-searchbar>
     </ion-col>
+    <ion-col size="12">
+      <div class="position-relative " *ngIf="filtered_ingredients.length > 0">
+        <div class="suggestion-list w-100 ion-padding">
+          <ion-list class="ion-no-margin" >
+            <ion-item class="ion-no-padding" *ngFor="let ingredient of filtered_ingredients" button (click)="addPreference(ingredient)" lines="none">
+              <ion-label>{{ingredient.name}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+      <ion-list>
+        <ion-item class="ion-no-padding" *ngFor="let preference of preferences[selected_tab]">
+          <ion-label>{{preference.name}}</ion-label>
+          <ion-icon name="close" slot="end" (click)="removePreference(selected_tab, preference)"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-col>
   </ion-row>
-  <div class="position-relative " *ngIf="filtered_ingredients.length > 0">
-    <ion-card class="suggestion_list w-100 ion-no-margin">
-      <ion-card-content>
-        <ion-list >
-          <ion-item *ngFor="let item of filtered_ingredients">
-            <ion-label>{{item.name}}</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-  </div>
 </ion-content>

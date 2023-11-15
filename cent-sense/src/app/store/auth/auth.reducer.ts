@@ -24,6 +24,7 @@ export const authReducer = createReducer(
     }),
     on(loginSuccess, (state, action:any) => {
         localStorage.setItem('user', JSON.stringify(action.user));
+        localStorage.setItem('token', action.token);
         return {
             ...state,
             user: action.payload,
