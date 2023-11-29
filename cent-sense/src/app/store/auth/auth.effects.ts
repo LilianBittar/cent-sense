@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import * as AuthActions from './auth.actions';
 import { Router } from '@angular/router';
 import { EventRelayService } from 'src/app/services/event-relay.service';
+import { ApiAdapterService } from 'src/app/services/api-adapter.service';
 
 @Injectable()
 export class AuthEffects {
@@ -69,11 +70,30 @@ export class AuthEffects {
         )
     );
 
+    editUserInfo$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.updateUserInfo),
+            exhaustMap((action: any) =>
+                this.apiAdapter.updateUserInfo(action.zip_code, action.radius).pipe(
+                    map((user: any) => {
+                        this.eventRelay.emit('update_user_info_success', '');
+                        return AuthActions.updateUserInfoSuccess(user);
+                    }),
+                    catchError((error) => {
+                        this.eventRelay.emit('update_user_info_failure', '');
+                        return of(AuthActions.updateUserInfoFailure({ error }));
+                    })
+                )
+            )
+        )
+    );
+
     constructor(
         private actions$: Actions,
         private authService: AuthService,
         private eventRelay: EventRelayService,
-        private router: Router
+        private router: Router,
+        private apiAdapter: ApiAdapterService
     ) {}
 
 }

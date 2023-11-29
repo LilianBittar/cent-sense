@@ -4,9 +4,81 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Plans</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="show_add_plan=true">
+        <ion-icon  name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  plans work
+  <ion-modal [isOpen]="show_add_plan" (willDismiss)="show_add_plan=false;">
+    <ng-template>
+      <ion-header mode="ios">
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="show_add_plan=false">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Generate Plan</ion-title>
+         
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding" [formGroup]="plan_form">
+        <ion-item lines="none">
+          <ion-label>Start Date</ion-label>
+          <ion-datetime-button datetime="startdate"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="startdate" presentation="date" [min]="today" formControlName="start_date" (ionChange)="renderMealList()"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Number of days</ion-label>
+          <div  class="d-flex align-items-center">
+            <ion-button size="small" fill="clear" (click)="decrementDays()">
+              <ion-icon name="remove-outline"></ion-icon>
+            </ion-button>
+            <span>{{plan_form.get('number_of_days')?.value}}</span>
+            <ion-button size="small" fill="clear" (click)="incrementDays()">
+              <ion-icon name="add-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-input class="ion-text-end" mode="ios" label="Budget" placeholder="Set a budget for this plan" type="number" formControlName="budget"></ion-input>
+        </ion-item>
+        <div class="meal-list-container">
+          <ion-card  *ngFor="let day of meal_list">
+            <ion-card-header class="ion-text-center">
+             <strong>
+              {{day.date | date:'mediumDate'}}
+             </strong>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-checkbox  mode="ios" class="w-100 ion-margin-top"  [checked]="day.breakfast"  (ionChange)="day.breakfast = !day.breakfast">
+                Breakfast
+              </ion-checkbox>
+              <ion-checkbox mode="ios" class="w-100 ion-margin-top" [checked]="day.lunch"  (ionChange)="day.lunch = !day.lunch">
+                Lunch
+              </ion-checkbox>
+              <ion-checkbox mode="ios" class="w-100 ion-margin-top" [checked]="day.dinner"  (ionChange)="day.dinner = !day.dinner">
+                Dinner
+              </ion-checkbox>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-content>
+      <ion-footer  class="ion-no-border">
+        <ion-toolbar mode="ios">
+          <ion-button size="small" expand="block" (click)="show_add_plan=false">
+            Generate Plan
+          </ion-button>
+        </ion-toolbar>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
 </ion-content>

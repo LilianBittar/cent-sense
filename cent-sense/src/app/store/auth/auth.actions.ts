@@ -40,6 +40,20 @@ export const registerFailure = createAction(
     props<{ error: any }>()
 );
 
+export const updateUserInfo = createAction(
+    '[Auth] Update User Info',
+    props<{ zip_code: number, radius: number }>()
+);
+
+export const updateUserInfoSuccess = createAction(
+    '[Auth] Update User Info Success',
+    props<{ payload: any }>()
+);
+
+export const updateUserInfoFailure = createAction(
+    '[Auth] Update User Info Failure',
+    props<{ error: any }>()
+);
 
 export const AuthActions = {
     login,
@@ -51,4 +65,7 @@ export const AuthActions = {
     register,
     registerSuccess,
     registerFailure,
+    updateUserInfo,
+    updateUserInfoSuccess,
+    updateUserInfoFailure
 };

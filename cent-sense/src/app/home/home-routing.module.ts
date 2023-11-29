@@ -5,6 +5,7 @@ import { PlansComponent } from './pages/plans/plans.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
 import { PreferencesComponent } from './pages/preferences/preferences.component';
 import { StatsComponent } from './pages/stats/stats.component';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'stats',
         component: StatsComponent                                   
+      },
+      {
+        path: 'my-profile',
+        component: MyProfileComponent
       }
     ]
   },

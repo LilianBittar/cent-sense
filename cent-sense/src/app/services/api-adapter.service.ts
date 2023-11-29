@@ -42,5 +42,12 @@ export class ApiAdapterService {
       name: ingredient_name,
     },this.generateHeader());      
   }
+
+  updateUserInfo(zip_code: number, radius: number) {
+    return this.http.post(environment.apiUrl + '/user', {
+      zip_code: zip_code,
+      radius: radius
+    }, this.generateHeader());
+  }
   
 }
