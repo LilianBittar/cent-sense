@@ -25,6 +25,45 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+/* Theme variables */
+
+.color-white {
+  color: #fff;
+}
+
+.color-black {
+  color: #000;
+}
+
+.color-primary {
+  color: --ion-color-primary;
+}
+
+.color-secondary {
+  color: --ion-color-secondary;
+}
+
+.color-tertiary {
+  color: --ion-color-tertiary;
+}
+
+.color-success {
+  color: --ion-color-success;
+}
+
+.color-warning {
+  color: --ion-color-warning;
+}
+
+.color-danger {
+  color: --ion-color-danger;
+}
+
+.color-dark {
+  color: --ion-color-dark;
+}
+
+
 
 .d-flex {
   display: flex;
@@ -128,4 +167,122 @@
 .position-sticky {
   position: sticky;
 }
+
+.rounded-1 {
+  border-radius: 0.25rem;
+}
+
+.rounded-2 {
+  border-radius: 0.5rem;
+}
+
+.rounded-3 {
+  border-radius: 1rem;
+}
+
+.rounded-4 {
+  border-radius: 1.5rem;
+}
+
+.border-0 {
+  border: 0;
+}
+
+.border-top-0 {
+  border-top: 0;
+}
+
+.border-right-0 {
+  border-right: 0;
+}
+
+.border-bottom-0 {
+  border-bottom: 0;
+}
+
+.border-left-0 {
+  border-left: 0;
+}
+
+.border-1 {
+  border: 0.05rem solid;
+}
+
+.border-top-1 {
+  border-top: 0.05rem solid;
+}
+
+.border-right-1 {
+  border-right: 0.05rem solid;
+}
+
+.border-bottom-1 {
+  border-bottom: 0.05rem solid;
+}
+
+.border-left-1 {
+  border-left: 0.05rem solid;
+}
+
+.border-2 {
+  border: 0.1rem solid;
+}
+
+.border-top-2 {
+  border-top: 0.1rem solid;
+}
+
+.border-right-2 {
+  border-right: 0.1rem solid;
+}
+
+.border-bottom-2 {
+  border-bottom: 0.1rem solid;
+}
+
+.border-left-2 {
+  border-left: 0.1rem solid;
+}
+
+.border-3 {
+  border: .15rem solid;
+}
+
+.border-top-3 {
+  border-top: .15rem solid;
+}
+
+.border-right-3 {
+  border-right: .15rem solid;
+}
+
+.border-bottom-3 {
+  border-bottom: .15rem solid;
+}
+
+.border-left-3 {
+  border-left: .15rem solid;
+}
+
+.border-4 {
+  border: .2rem solid;
+}
+
+.border-top-4 {
+  border-top: .2rem solid;
+}
+
+.border-right-4 {
+  border-right: .2rem solid;
+}
+
+.border-bottom-4 {
+  border-bottom: .2rem solid;
+}
+
+.border-left-4 {
+  border-left: .2rem solid;
+}
+
+
 

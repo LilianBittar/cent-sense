@@ -1,0 +1,98 @@
+
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Generate Plan</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [formGroup]="plan_form">
+  <ion-item lines="none">
+    <ion-label>Start Date</ion-label>
+    <ion-datetime-button datetime="startdate"></ion-datetime-button>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="startdate" presentation="date" [min]="today"
+          formControlName="start_date" (ionChange)="renderMealList()"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>Number of days</ion-label>
+    <div class="d-flex align-items-center">
+      <ion-button size="small" fill="clear" (click)="decrementDays()">
+        <ion-icon name="remove-outline"></ion-icon>
+      </ion-button>
+      <span>{{plan_form.get('number_of_days')?.value}}</span>
+      <ion-button size="small" fill="clear" (click)="incrementDays()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-input class="ion-text-end" mode="ios" label="Budget"
+      placeholder="Set a budget for this plan" type="number"
+      formControlName="budget"></ion-input>
+  </ion-item>
+  <div>
+    <ion-card *ngFor="let day of meal_list" color="light">
+      <ion-card-header class="ion-text-center">
+        <strong>
+          {{day.date | date:'mediumDate'}}
+        </strong>
+      </ion-card-header>
+      <ion-card-content>
+        <ng-container *ngFor="let mealType of ['breakfast', 'lunch', 'dinner']">
+          <ion-checkbox mode="ios" class="w-100 ion-margin-top" [checked]="day[mealType]" (ionChange)="day[mealType] = !day[mealType]">
+            {{mealType | titlecase}}
+          </ion-checkbox>
+          <ion-card class="ion-margin-top rounded-2 ion-no-margin" *ngIf="day.recipes?.[mealType]" color="primary">
+            <ion-card-header>
+              <ion-card-title>
+                <strong>{{day.recipes?.[mealType]?.name}}</strong>
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div>
+                <strong>Instructions</strong>
+              </div>
+              <p>{{day.recipes?.[mealType]?.instructions}}</p>
+              <div class="ion-margin-top">
+                <strong>Ingredients</strong>
+                <ion-list lines="none" class="rounded-2 ion-no-padding">
+                  <ion-item *ngFor="let ingredient of day.recipes?.[mealType]?.ingredients_used" button>
+                    <ion-label slot="start">{{ingredient}}</ion-label>
+                    <small>
+                      {{getSelectedSuggestion(day.recipes?.[mealType]?.suggestions?.[ingredient]).name}}
+                    </small>
+                    <small slot="end">{{getSelectedSuggestion(day.recipes?.[mealType]?.suggestions?.[ingredient]).price}} DKK</small>
+                  </ion-item>
+                  <ion-item color="secondary">
+                    <ion-label slot="start">
+                      <strong>Total</strong>
+                    </ion-label>
+                    <small slot="end">
+                      <strong>{{getTotalCost(day.recipes?.[mealType]?.suggestions)}} DKK</strong>
+                    </small>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ng-container>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar mode="ios">
+    <ion-button size="small" expand="block" (click)="sendPlanRequest()">
+      <span class="color-white">Generate Plan</span>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-loading [isOpen]="loading" message="Generating plan, please wait..."></ion-loading>

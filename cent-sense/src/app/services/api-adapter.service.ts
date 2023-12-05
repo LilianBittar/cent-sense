@@ -49,5 +49,14 @@ export class ApiAdapterService {
       radius: radius
     }, this.generateHeader());
   }
+
+  sendPlanRequest(plan: any) {
+    return this.http.post(environment.apiUrl + '/plan/generate', plan, this.generateHeader());
+  }
   
+
+  getProductSuggestions(product_name: string) {
+    return this.http.get(environment.apiUrl + '/product-suggestions/' + product_name);
+  }
+
 }

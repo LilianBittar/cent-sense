@@ -6,6 +6,7 @@ import { RecipesComponent } from './pages/recipes/recipes.component';
 import { PreferencesComponent } from './pages/preferences/preferences.component';
 import { StatsComponent } from './pages/stats/stats.component';
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
+import { GeneratePlanComponent } from './pages/plans/generate-plan/generate-plan.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'plans',
         component: PlansComponent
+      },
+      {
+        path: 'plans/generate',
+        component: GeneratePlanComponent
       },
       {
         path: 'recipes',
@@ -31,7 +36,8 @@ const routes: Routes = [
       {
         path: 'my-profile',
         component: MyProfileComponent
-      }
+      },
+      
     ]
   },
   
