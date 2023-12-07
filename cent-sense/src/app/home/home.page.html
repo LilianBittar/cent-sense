@@ -1,6 +1,6 @@
 <ion-menu contentId="main-content" #mainMenu id="mainMenu">
   <ion-header>
-    <ion-toolbar routerLink="/auth/my-profile">
+    <ion-toolbar routerLink="/auth/my-profile" (click)="this.mainMenu.close()">
       <ion-avatar slot="start" class="d-flex align-items-center justify-content-center">
         <ion-icon size="large" name="person-circle-outline"></ion-icon>
       </ion-avatar>

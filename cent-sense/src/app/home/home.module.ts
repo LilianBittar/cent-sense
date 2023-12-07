@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
-
 import { HomePageRoutingModule } from './home-routing.module';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { PlansComponent } from './pages/plans/plans.component';
@@ -13,6 +12,9 @@ import { PreferencesComponent } from './pages/preferences/preferences.component'
 import { StatsComponent } from './pages/stats/stats.component';
 
 import { MyProfileComponent } from './pages/my-profile/my-profile.component';
+import { ViewPlanComponent } from './pages/plans/view-plan/view-plan.component';
+import { ChartComponent } from './components/chart/chart.component';
+
 
 
 @NgModule({
@@ -23,13 +25,18 @@ import { MyProfileComponent } from './pages/my-profile/my-profile.component';
     ReactiveFormsModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage,
+  declarations: [
+    HomePage,
      IntroductionComponent,
      PlansComponent,
      RecipesComponent,
      PreferencesComponent,
      StatsComponent,
      GeneratePlanComponent,
-     MyProfileComponent]
+     ViewPlanComponent,
+     MyProfileComponent,
+     ChartComponent
+    ],
+     schemas: [NO_ERRORS_SCHEMA]
 })
 export class HomePageModule {}

@@ -51,6 +51,10 @@ export class AppComponent {
           this.error_message = 'User info update failed';
           this.show_error_toast = true;
           break;
+        case 'plan_creation_success':
+          this.success_message = 'Plan created successfully';
+          this.show_success_toast = true;
+          break;
         default:
           console.log('unknown event received');
           break;

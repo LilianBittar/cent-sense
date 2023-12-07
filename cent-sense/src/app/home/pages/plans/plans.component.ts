@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ApiAdapterService } from 'src/app/services/api-adapter.service';
 
 @Component({
   selector: 'app-plans',
@@ -7,10 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlansComponent implements OnInit {
 
+  plan_list: any[] = [];
 
-  constructor() {}
+  constructor(
+    private store: Store,
+  ) {}
 
   ngOnInit(): void {
+    this.store.subscribe((state: any) => {
+      if(state.plans?.plans.length > 0){
+        this.plan_list = state.plans.plans;
+      }
+    });
   }
 
  

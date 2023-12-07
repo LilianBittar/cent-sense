@@ -51,12 +51,20 @@ export class ApiAdapterService {
   }
 
   sendPlanRequest(plan: any) {
-    return this.http.post(environment.apiUrl + '/plan/generate', plan, this.generateHeader());
+    return this.http.post(environment.apiUrl + '/plans/generate', plan, this.generateHeader());
   }
   
+  savePlan(data: any) {
+    return this.http.post(environment.apiUrl + '/plans/save', {
+      start_date: data.start_date,
+      number_of_days: data.number_of_days,
+      budget: data.budget,
+      meal_list: data.meal_list
+    }, this.generateHeader());
+  }
 
-  getProductSuggestions(product_name: string) {
-    return this.http.get(environment.apiUrl + '/product-suggestions/' + product_name);
+  getPlans() {
+    return this.http.get(environment.apiUrl + '/plans', this.generateHeader());
   }
 
 }

@@ -11,7 +11,7 @@
 </ion-header>
 <ion-content [formGroup]="plan_form">
   <ion-item lines="none">
-    <ion-label>Start Date</ion-label>
+    <ion-label>Start date</ion-label>
     <ion-datetime-button datetime="startdate"></ion-datetime-button>
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
@@ -32,10 +32,24 @@
       </ion-button>
     </div>
   </ion-item>
-  <ion-item lines="none">
-    <ion-input class="ion-text-end" mode="ios" label="Budget"
+  <ion-item lines="none" (ionBlur)="promotePlan()" [class.color-danger]="getTotalPlanCost() > plan_form.get('budget')?.value">
+    <ion-input class="ion-text-end" mode="ios" label="Your budget"
       placeholder="Set a budget for this plan" type="number"
       formControlName="budget"></ion-input>
+      <span class="ion-margin-start">DKK</span>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-icon name="remove-circle-outline" color="danger" (click)="promotePlan()" ></ion-icon>
+    <div class="d-flex w-100 justify-content-center">
+      <span>
+        Plan total
+      </span>
+      <div>
+        <strong class="ion-margin-start">{{getTotalPlanCost() | number:'1.1-2'}}</strong>
+        <strong class="ion-margin-start">DKK</strong>
+      </div>
+    </div>
+    <ion-icon name="add-circle-outline" color="success" (click)="demotePlan()" ></ion-icon>
   </ion-item>
   <div>
     <ion-card *ngFor="let day of meal_list" color="light">
@@ -56,26 +70,57 @@
               </ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <div>
+              <div class="ion-margin-bottom">
                 <strong>Instructions</strong>
               </div>
               <p>{{day.recipes?.[mealType]?.instructions}}</p>
               <div class="ion-margin-top">
-                <strong>Ingredients</strong>
+                <div class="ion-margin-bottom">
+                  <strong>Ingredients</strong>
+                </div>
                 <ion-list lines="none" class="rounded-2 ion-no-padding">
-                  <ion-item *ngFor="let ingredient of day.recipes?.[mealType]?.ingredients_used" button>
-                    <ion-label slot="start">{{ingredient}}</ion-label>
-                    <small>
-                      {{getSelectedSuggestion(day.recipes?.[mealType]?.suggestions?.[ingredient]).name}}
-                    </small>
+                  <ion-item *ngFor="let ingredient of day.recipes?.[mealType]?.ingredients_used" button (click)="this.ingredientModal.isOpen = true">
+                    <ion-label>{{ingredient}}
+                      <small class="color-medium">
+                        {{getSelectedSuggestion(day.recipes?.[mealType]?.suggestions?.[ingredient]).title}}
+                      </small>
+                    </ion-label>
+                    
                     <small slot="end">{{getSelectedSuggestion(day.recipes?.[mealType]?.suggestions?.[ingredient]).price}} DKK</small>
+                    <ion-modal #ingredientModal id="ingredientModal">
+                      <ng-template>
+                        <ion-header mode="ios">
+                          <ion-toolbar>
+                            <ion-buttons slot="end">
+                              <ion-button (click)="this.ingredientModal.isOpen = false">
+                                <ion-icon name="checkmark-outline"></ion-icon>
+                              </ion-button>
+                            </ion-buttons>
+                            <ion-title>{{ingredient}}</ion-title>
+                          </ion-toolbar>
+                        </ion-header>
+                        <ion-content>
+                          <ion-list mode="ios">
+                            <ion-item *ngFor="let suggestion of day.recipes?.[mealType]?.suggestions?.[ingredient]" button detail="false"
+                                      [color]="suggestion.selected ? 'primary' : ''" 
+                                      (click)="deselectAll(day.recipes?.[mealType]?.suggestions?.[ingredient]); suggestion.selected = true; ">
+                              <ion-avatar aria-hidden="true" slot="start">
+                                <img alt="" [src]="suggestion.img" />
+                              </ion-avatar>
+                              <ion-label>{{suggestion.title}}</ion-label>
+                              <small slot="end">{{suggestion.price}} DKK</small>
+                            </ion-item>
+                          </ion-list>
+                        </ion-content>
+                      </ng-template>
+                    </ion-modal>
                   </ion-item>
                   <ion-item color="secondary">
                     <ion-label slot="start">
                       <strong>Total</strong>
                     </ion-label>
                     <small slot="end">
-                      <strong>{{getTotalCost(day.recipes?.[mealType]?.suggestions)}} DKK</strong>
+                      <strong>{{getTotalMealCost(day.recipes?.[mealType]?.suggestions) | number:'1.1-2'}} DKK</strong>
                     </small>
                   </ion-item>
                 </ion-list>
@@ -89,6 +134,9 @@
 </ion-content>
 <ion-footer class="ion-no-border">
   <ion-toolbar mode="ios">
+    <ion-button size="small" expand="block" (click)="confirmPlan()" color="success" [disabled]="getTotalPlanCost() > plan_form.get('budget')?.value"> 
+      <span class="color-white">Confirm Plan</span>
+    </ion-button>
     <ion-button size="small" expand="block" (click)="sendPlanRequest()">
       <span class="color-white">Generate Plan</span>
     </ion-button>

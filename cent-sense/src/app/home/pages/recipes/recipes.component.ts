@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-recipes',
@@ -7,8 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecipesComponent  implements OnInit {
 
-  constructor() { }
+  recipe_list: any = [];
 
-  ngOnInit() {}
+  constructor(
+    private store: Store
+  ) { }
+
+  ngOnInit() {
+    this.store.subscribe((state:any)=> {
+      if(state.plans?.plans){
+        let plan_recipes = state.plans?.plans.map((plan:any)=> plan.recipes);
+        for(let i=0; i<plan_recipes.length; i++){
+          this.recipe_list = this.recipe_list.concat(plan_recipes[i]);
+        }
+        console.log(this.recipe_list);
+      }
+    });
+  }
 
 }

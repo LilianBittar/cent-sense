@@ -6,11 +6,54 @@
     <ion-title>Plans</ion-title>
     <ion-buttons slot="end">
       <ion-button routerLink="generate">
-        <ion-icon  name="add-outline"></ion-icon>
+        <ion-icon name="add-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="ion-padding">
+  <ion-card *ngFor="let plan of plan_list" class="rounded-2" [routerLink]="['view/' + plan.id]">
+    <ion-card-header color="primary">
+      <h4 class="ion-text-center ion-no-margin">
+        {{plan.start_date | date:'mediumDate'}}
+      </h4>
+    </ion-card-header>
+    <ion-grid class="w-100">
+      <ion-row>
+        <ion-col>
+          <div class="d-flex flex-column align-items-center">
+            <strong>
+              Days
+            </strong>
+            <h4 class="ion-no-margin">
+              {{plan.number_of_days}}
+            </h4>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="d-flex flex-column align-items-center">
+            <strong>
+              Meals
+            </strong>
+            <h4 class="ion-no-margin">
+              {{plan.recipes?.length}} 
+            </h4>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="d-flex flex-column align-items-center">
+            <strong >
+              Total cost
+            </strong>
+            <div class="d-flex align-items-baseline">
+              <h4 class="ion-no-margin">
+                {{plan.total_price | number:'1.1-2'}}
+              </h4>
+               <span>DKK</span>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </ion-content>

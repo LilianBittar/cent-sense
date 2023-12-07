@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/auth/plans">
+        <ion-icon name="arrow-back" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Preview Plan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div  *ngIf="selected_tab != ''">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="d-flex flex-column align-items-center">
+            <strong>
+              Budget
+            </strong>
+            <h4 class="ion-no-margin">
+              {{plan_data.budget | number:'1.1-2'}}
+              <small>DKK</small>
+            </h4>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="d-flex flex-column align-items-center">
+            <strong>
+              Total cost
+            </strong>
+            <h4 class="ion-no-margin">
+              {{plan_data.total_price | number:'1.1-2'}}
+              <small>DKK</small>
+            </h4>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-segment [value]="selected_tab" mode="ios">
+      <ion-segment-button [value]="recipe_date" *ngFor="let recipe_date of recipe_dates" (click)="selected_tab = recipe_date">
+        <ion-label>{{recipe_date | date:'mediumDate'}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <ion-card *ngFor="let recipe of filterRecipesByDate(selected_tab)" mode="ios" class="rounded-2">
+      <ion-card-header color="primary">
+        <ion-card-title>
+          {{recipe.name}}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="ion-margin-top ion-margin-bottom">
+          <strong>
+            Instructions
+          </strong>
+        </div>
+        <p>{{recipe.instructions}}</p>
+        <div class="ion-margin-top ion-margin-bottom">
+          <strong>Ingredients</strong>
+        </div>
+        <ion-list mode="ios">
+          <ion-item *ngFor="let ingredient of recipe.recipeIngredients" lines="none">
+            <ion-avatar slot="start">
+              <img [src]="ingredient.ingredient_product.img" alt="">
+            </ion-avatar>
+            <ion-label>
+              {{ingredient.ingredient_product.title}}
+            </ion-label>
+            <small>
+              {{ingredient.ingredient_product.price}} DKK
+            </small>
+          </ion-item>
+          <ion-item color="secondary" lines="none">
+            <ion-label slot="start">
+              <strong>Total</strong>
+            </ion-label>
+            <small slot="end">
+              <strong>{{recipe.total_price | number:'1.1-2'}} DKK</strong>
+            </small>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

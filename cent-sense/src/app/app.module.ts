@@ -17,15 +17,18 @@ import {
 } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/auth/auth.effects';
+import { PlansEffects } from './store/plans/plans.effects';
+import { plansReducer } from './store/plans/plans.reducer';
 
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, RegisterComponent],
   imports: [
     StoreModule.forRoot({
-     auth: authReducer 
+     auth: authReducer, 
+     plans: plansReducer
     }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, PlansEffects]),
     BrowserModule, 
     IonicModule.forRoot(),
     AppRoutingModule, 

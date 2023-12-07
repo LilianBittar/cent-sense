@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { ApiAdapterService } from 'src/app/services/api-adapter.service';
+import { EventRelayService } from 'src/app/services/event-relay.service';
 
 @Component({
   selector: 'app-generate-plan',
@@ -20,6 +21,7 @@ export class GeneratePlanComponent  implements OnInit {
     private formBuilder: FormBuilder, 
     private apiAdapter: ApiAdapterService,
     private navController: NavController,
+    private eventRelay: EventRelayService
     ) { }
 
   ngOnInit() {
@@ -30,10 +32,92 @@ export class GeneratePlanComponent  implements OnInit {
     });
     if(localStorage.getItem('meal_list')){
       this.meal_list = JSON.parse(localStorage.getItem('meal_list') || '{}');
+      this.plan_form.patchValue({
+        number_of_days: this.meal_list.length,
+        budget: localStorage.getItem('budget') ,
+      });
     }else{
       this.renderMealList();
     }
 
+  }
+
+
+
+  deselectAll(suggestions:any[]){
+    const suggestion_list = suggestions;
+    for(let suggestion of suggestion_list){
+      suggestion.selected = false;
+    }
+  }
+
+
+  upgradeSuggestion(suggestions: any[]) {
+    const suggestion_list = suggestions;
+    let select_next = false;
+    for (let i = 0; i < suggestion_list.length; i++) {
+      const suggestion = suggestion_list[i];
+      if (suggestion.selected === true && i < suggestion_list.length - 1) {
+        suggestion.selected = false;
+        select_next = true;
+      } else if (select_next) {
+        suggestion.selected = true;
+        select_next = false;
+        return;
+      }
+    }
+  }
+
+  downgradeSuggestion(suggestions: any[]) {
+    const suggestion_list = suggestions;
+    let select_next = false;
+    for (let i = suggestion_list.length - 1; i >= 0; i--) {
+      const suggestion = suggestion_list[i];
+      if (suggestion.selected === true && i > 0) {
+        suggestion.selected = false;
+        select_next = true;
+      } else if (select_next) {
+        suggestion.selected = true;
+        select_next = false;
+        return;
+      }
+    }
+  }
+
+
+  promotePlan(){
+    for(let meal of this.meal_list){
+      const recipes = Object.values(meal.recipes);
+      for (let recipe of Object.values(recipes)) {
+        const suggestions = Object.values((recipe as any).suggestions) as any[];
+        for (let suggestion_list of suggestions) {
+          this.upgradeSuggestion(suggestion_list);
+        }
+      }
+    }
+  }
+
+  demotePlan(){
+    for(let meal of this.meal_list){
+      const recipes = Object.values(meal.recipes);
+      for (let recipe of Object.values(recipes)) {
+        const suggestions = Object.values((recipe as any).suggestions) as any[];
+        for (let suggestion_list of suggestions) {
+          this.downgradeSuggestion(suggestion_list);
+        }
+      }
+    }
+  }
+
+
+  getAllRecipes(){
+    let recipes = [];
+    for(let meal of this.meal_list){
+      for(let recipe of Object.values(meal.recipes)){
+        recipes.push(recipe);
+      }
+    }
+    return recipes;
   }
 
   renderMealList() {
@@ -81,11 +165,21 @@ export class GeneratePlanComponent  implements OnInit {
     return null;
   }
 
-  getTotalCost(suggestion_list: any){
-    console.log(suggestion_list);
+  getTotalMealCost(suggestion_list: any){
     let total_cost = 0;
     for(let suggestion of Object.keys(suggestion_list)){
       total_cost += this.getSelectedSuggestion(suggestion_list[suggestion]).price;
+    }
+    return total_cost;
+  }
+
+  getTotalPlanCost(){
+    let total_cost = 0;
+    for(let meal of this.meal_list){
+      const recipes = Object.values(meal.recipes);
+      for(let recipe of Object.values(recipes)){
+        total_cost += this.getTotalMealCost((recipe as any).suggestions);
+      }
     }
     return total_cost;
   }
@@ -110,6 +204,31 @@ export class GeneratePlanComponent  implements OnInit {
           this.loading = false;
           this.meal_list = data.plan;
           localStorage.setItem('meal_list', JSON.stringify(this.meal_list));
+          localStorage.setItem('budget', this.plan_form.value.budget);
+        },
+        error: error => {
+          this.loading = false;
+          console.error('There was an error!', error);
+        }
+      }
+    );
+  }
+
+  confirmPlan(){
+    this.loading = true;
+    this.apiAdapter.savePlan({
+      start_date: this.plan_form.value.start_date,
+      number_of_days: this.plan_form.value.number_of_days,
+      budget: this.plan_form.value.budget,
+      meal_list: this.meal_list
+    }).subscribe(
+      {
+        next: (data:any) => {
+          this.loading = false;
+          localStorage.removeItem('meal_list');
+          localStorage.removeItem('budget');
+          this.eventRelay.emit('plan_creation_success', true);
+          this.navController.back();
         },
         error: error => {
           this.loading = false;

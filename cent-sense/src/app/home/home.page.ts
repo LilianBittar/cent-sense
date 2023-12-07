@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ApiAdapterService } from '../services/api-adapter.service';
 import { Store } from '@ngrx/store';
 import { loginSuccess } from '../store/auth/auth.actions';
+import { PlansActions } from '../store/plans/plans.actions';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,7 @@ export class HomePage {
         }
       );
     }
+    this.store.dispatch(PlansActions.PlansLoadAction());
   }
 
 }

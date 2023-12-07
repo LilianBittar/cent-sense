@@ -27,6 +27,10 @@
 
 /* Theme variables */
 
+*{
+  font-family: 'system-ui', sans-serif;
+}
+
 .color-white {
   color: #fff;
 }
@@ -36,32 +40,46 @@
 }
 
 .color-primary {
-  color: --ion-color-primary;
+  color: var(--ion-color-primary)!important;
 }
 
 .color-secondary {
-  color: --ion-color-secondary;
+  color: var(--ion-color-secondary)!important;
 }
 
 .color-tertiary {
-  color: --ion-color-tertiary;
+  color: var(--ion-color-tertiary)!important;
 }
 
 .color-success {
-  color: --ion-color-success;
+  color: var(--ion-color-success)!important;
 }
 
 .color-warning {
-  color: --ion-color-warning;
+  color: var(--ion-color-warning)!important;
 }
 
 .color-danger {
-  color: --ion-color-danger;
+  color: var(--ion-color-danger)!important;
 }
 
 .color-dark {
-  color: --ion-color-dark;
+  color: var(--ion-color-dark)!important;
 }
+
+.color-medium {
+  color: var(--ion-color-medium)!important;
+}
+
+.color-light {
+  color: var(--ion-color-light)!important;
+}
+
+.color-clear {
+  color: var(--ion-color-clear)!important;
+}
+
+
 
 
 
