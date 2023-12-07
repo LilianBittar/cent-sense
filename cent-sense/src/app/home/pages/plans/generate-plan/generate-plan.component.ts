@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
 import { ApiAdapterService } from 'src/app/services/api-adapter.service';
 import { EventRelayService } from 'src/app/services/event-relay.service';
+import { PlansLoadAction } from 'src/app/store/plans/plans.actions';
 
 @Component({
   selector: 'app-generate-plan',
@@ -21,7 +23,8 @@ export class GeneratePlanComponent  implements OnInit {
     private formBuilder: FormBuilder, 
     private apiAdapter: ApiAdapterService,
     private navController: NavController,
-    private eventRelay: EventRelayService
+    private eventRelay: EventRelayService,
+    private store: Store
     ) { }
 
   ngOnInit() {
@@ -136,14 +139,15 @@ export class GeneratePlanComponent  implements OnInit {
     if (this.plan_form.value.number_of_days >= 5) {
       return;
     }
-    this.plan_form.patchValue({
-      number_of_days: this.plan_form.value.number_of_days + 1,
-    });
+    
     this.meal_list.push({
-      date: new Date(this.plan_form.value.start_date).setDate(new Date(this.plan_form.value.start_date).getDate() + 1),
+      date: new Date(this.plan_form.value.start_date).setDate(new Date(this.plan_form.value.start_date).getDate() + this.plan_form.value.number_of_days),
       breakfast: true,
       lunch: true,
       dinner: true,
+    });
+    this.plan_form.patchValue({
+      number_of_days: this.plan_form.value.number_of_days + 1,
     });
   }
  
@@ -176,6 +180,9 @@ export class GeneratePlanComponent  implements OnInit {
   getTotalPlanCost(){
     let total_cost = 0;
     for(let meal of this.meal_list){
+      if(!meal.recipes){
+        return 0;
+      }
       const recipes = Object.values(meal.recipes);
       for(let recipe of Object.values(recipes)){
         total_cost += this.getTotalMealCost((recipe as any).suggestions);
@@ -228,6 +235,7 @@ export class GeneratePlanComponent  implements OnInit {
           localStorage.removeItem('meal_list');
           localStorage.removeItem('budget');
           this.eventRelay.emit('plan_creation_success', true);
+          this.store.dispatch(PlansLoadAction());
           this.navController.back();
         },
         error: error => {

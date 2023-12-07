@@ -134,7 +134,9 @@
 </ion-content>
 <ion-footer class="ion-no-border">
   <ion-toolbar mode="ios">
-    <ion-button size="small" expand="block" (click)="confirmPlan()" color="success" [disabled]="getTotalPlanCost() > plan_form.get('budget')?.value"> 
+    <ion-button size="small" expand="block" (click)="confirmPlan()" 
+                color="success" [disabled]="getTotalPlanCost() > plan_form.get('budget')?.value"
+                *ngIf="getTotalPlanCost() > 0"> 
       <span class="color-white">Confirm Plan</span>
     </ion-button>
     <ion-button size="small" expand="block" (click)="sendPlanRequest()">

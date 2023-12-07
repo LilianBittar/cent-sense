@@ -1,1 +1,26 @@
-<canvas #chartCanvas  width="600" height="400"></canvas>
+<div class="ion-no-padding ion-padding-end ion-padding-top">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="1" class="border-right-1" >
+        <div class="position-relative">
+          <small class="position-absolute color-medium" style="bottom: 10px; left: -20px; right: -10px;">
+            DKK spent
+          </small>
+        </div>
+        <div class="d-flex flex-column justify-content-between  ion-text-end h-100">
+          <span *ngFor="let v of getChartValues()" class="font-size-1">
+            {{v}}
+          </span>
+        </div>
+      </ion-col>
+      <ion-col size="11">
+        <canvas #chartCanvas class="w-100"></canvas>
+      </ion-col>
+      <ion-col offset="1" size="11"  class="d-flex justify-content-between border-top-1 ion-padding-top">
+        <span *ngFor="let d of data" class="font-size-1 chart-label">
+          {{d.key | date:'MMM d'}}
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
