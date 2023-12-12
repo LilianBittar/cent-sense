@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import { StoreModule } from '@ngrx/store';
 import { MyProfileComponent } from './my-profile.component';
 
 describe('MyProfileComponent', () => {
@@ -10,7 +10,7 @@ describe('MyProfileComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MyProfileComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), StoreModule.forRoot({})]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MyProfileComponent);

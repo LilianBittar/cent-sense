@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { StoreModule } from '@ngrx/store';
 
 import { LoginComponent } from './login.component';
 
@@ -10,7 +11,7 @@ describe('LoginComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), StoreModule.forRoot({})]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
@@ -21,4 +22,9 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have a login form', () => {
+    expect(component.loginForm).toBeTruthy();
+  }
+  );
 });

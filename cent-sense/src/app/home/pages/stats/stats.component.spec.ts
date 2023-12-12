@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import { StoreModule } from '@ngrx/store';
 import { StatsComponent } from './stats.component';
 
 describe('StatsComponent', () => {
@@ -10,7 +10,7 @@ describe('StatsComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ StatsComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), StoreModule.forRoot({})]
     }).compileComponents();
 
     fixture = TestBed.createComponent(StatsComponent);

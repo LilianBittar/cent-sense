@@ -210,8 +210,6 @@ export class GeneratePlanComponent  implements OnInit {
         next: (data:any) => {
           this.loading = false;
           this.meal_list = data.plan;
-          localStorage.setItem('meal_list', JSON.stringify(this.meal_list));
-          localStorage.setItem('budget', this.plan_form.value.budget);
         },
         error: error => {
           this.loading = false;
@@ -220,7 +218,7 @@ export class GeneratePlanComponent  implements OnInit {
       }
     );
   }
-
+  
   confirmPlan(){
     this.loading = true;
     this.apiAdapter.savePlan({

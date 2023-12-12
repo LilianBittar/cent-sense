@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { StoreModule } from '@ngrx/store';
 
 import { RegisterComponent } from './register.component';
 
@@ -10,7 +11,7 @@ describe('RegisterComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), StoreModule.forRoot({})]
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
