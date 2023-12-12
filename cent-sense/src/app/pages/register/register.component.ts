@@ -29,7 +29,5 @@ export class RegisterComponent  implements OnInit {
       const password = this.registerForm.get('password')?.value;
       this.store.dispatch(AuthActions.register({ name, email, password }));
   }
-  
   }
-
 }

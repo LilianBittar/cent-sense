@@ -4,7 +4,6 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
-import { IntroductionComponent } from './introduction/introduction.component';
 import { PlansComponent } from './pages/plans/plans.component';
 import { GeneratePlanComponent } from './pages/plans/generate-plan/generate-plan.component';
 import { RecipesComponent } from './pages/recipes/recipes.component';
@@ -27,7 +26,6 @@ import { ChartComponent } from './components/chart/chart.component';
   ],
   declarations: [
     HomePage,
-     IntroductionComponent,
      PlansComponent,
      RecipesComponent,
      PreferencesComponent,

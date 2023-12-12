@@ -37,13 +37,19 @@
             <h1 class="ion-no-margin">{{getTotalMonthPrice() | currency:'DKK':'symbol':'1.2-2'}}</h1>
           </ion-card-header>
           <ion-card-content>
+            <div class="w-100 d-flex justify-content-between ion-margin-bottom">
+              <ion-label>
+                Meal count
+              </ion-label>
+              <strong>{{display_recipe_list?.length}}</strong>
+            </div>
             <ion-label>
               Product breakdown
             </ion-label>
             <ion-list lines="none">
               <ion-item *ngFor="let p of getUniqueProducts() | keyvalue">
-                <ion-label>{{p.key}}</ion-label>
-                <ion-badge slot="end">{{p.value | currency:'DKK':'symbol':'1.2-2'}}</ion-badge>
+                <ion-label>{{p.key}} x{{p.value.count}}</ion-label>
+                <ion-badge slot="end">{{p.value.total | currency:'DKK':'symbol':'1.2-2'}}</ion-badge>
               </ion-item>
             </ion-list>
           </ion-card-content>

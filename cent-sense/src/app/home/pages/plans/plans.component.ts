@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ApiAdapterService } from 'src/app/services/api-adapter.service';
 
 @Component({
   selector: 'app-plans',
@@ -22,7 +21,4 @@ export class PlansComponent implements OnInit {
       }
     });
   }
-
- 
-
 }

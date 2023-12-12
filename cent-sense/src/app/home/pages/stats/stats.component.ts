@@ -102,9 +102,13 @@ export class StatsComponent implements OnInit {
       const recipe_ingredients = recipe.recipeIngredients;
       for (let recipe_ingredient of recipe_ingredients) {
         if(product_map[recipe_ingredient.ingredient.name]){
-          product_map[recipe_ingredient.ingredient.name] += parseFloat(recipe_ingredient.ingredient_product.price);
+          product_map[recipe_ingredient.ingredient.name].total += parseFloat(recipe_ingredient.ingredient_product.price);
+          product_map[recipe_ingredient.ingredient.name].count += 1;
         }else{
-          product_map[recipe_ingredient.ingredient.name] = parseFloat(recipe_ingredient.ingredient_product.price);
+          product_map[recipe_ingredient.ingredient.name] = {
+            total: parseFloat(recipe_ingredient.ingredient_product.price),
+            count: 1
+          }
         }
       }
     }

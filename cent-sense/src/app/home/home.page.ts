@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ApiAdapterService } from '../services/api-adapter.service';
 import { Store } from '@ngrx/store';
-import { loginSuccess } from '../store/auth/auth.actions';
+
 import { PlansActions } from '../store/plans/plans.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ export class HomePage {
 
   constructor(
     private api: ApiAdapterService,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {
     
   }
@@ -40,6 +42,11 @@ export class HomePage {
       );
     }
     this.store.dispatch(PlansActions.PlansLoadAction());
+  }
+
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
 }
